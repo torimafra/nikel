@@ -1,3 +1,5 @@
+//VARIÁVEIS
+
 const myModal = new bootstrap.Modal("#transaction-modal"); //função do bootstrap
 let logged = sessionStorage.getItem("logged");
 const session = localStorage.getItem("session");
@@ -5,7 +7,7 @@ let data = {
     transactions:[]
 };
 
-//CHECAGEM
+//CHECK INICIAL
 
 function checkLogged() {
 
@@ -20,9 +22,9 @@ function checkLogged() {
     }
 
     const dataUser = localStorage.getItem(logged);
-    if (dataUser) {
+
+    if (dataUser)
         data = JSON.parse(dataUser);
-    }
 
     getTransactions();
 };
@@ -44,6 +46,7 @@ document.getElementById("button-logout").addEventListener("click", logout);
 //ADICIONAR LANÇAMENTO
 
 document.getElementById("transaction-form").addEventListener("submit", function(e) {
+
     e.preventDefault();
 
     const value = parseFloat(document.getElementById("value-input").value);
@@ -80,9 +83,8 @@ function getTransactions() {
         transactions.forEach((item) => {
             let type = "Entrada";
 
-            if (item.type === "2"){
+            if (item.type === "2")
                 type = "Saída";
-            };
 
             transactionsHtml += `
                 <tr>
@@ -91,9 +93,9 @@ function getTransactions() {
                     <td>${type}</td>
                     <td>${item.description}</td>
                 </tr>
-            `;
+            `
         });
-    }
+    };
 
     document.getElementById("transactions-list").innerHTML = transactionsHtml;
 }

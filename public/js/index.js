@@ -1,10 +1,23 @@
-//MODAL
+//VARIÁVEIS
 
 const myModal = new bootstrap.Modal("#register-modal"); //função do bootstrap
 let logged = sessionStorage.getItem("logged");
 const session = localStorage.getItem("session");
 
 //CHECK INICIAL
+
+function checkLogged() {
+
+    if(session) {
+        sessionStorage.setItem("logged", session);
+        logged = session;
+    };
+
+    if(logged) {
+        saveSession(logged, session);
+        window.location.href = "home.html";
+    }
+};
 
 checkLogged();
 
@@ -37,10 +50,8 @@ document.getElementById("create-form").addEventListener("submit", function(e) {
     alert("Conta criada com sucesso!");
 });
 
-//localStorage é o armazenamento local da aplicação
-//setItem salva as informações no localStorage
-//inpect -> application -> Local storage
 function saveAccount(data) {
+
     localStorage.setItem(data.login, JSON.stringify(data));
 };
 
@@ -68,12 +79,12 @@ document.getElementById("login-form").addEventListener("submit", function(e) {
         };
 
         saveSession(email, checkSession);
-        //se tiver conta, manda para a home
         window.location.href = "home.html";
     };
 });
 
 function getAccount(key) {
+
     const account = localStorage.getItem(key);
 
     if(account)
@@ -84,23 +95,8 @@ function getAccount(key) {
 
 function saveSession(data, saveSession) {
     
-    if(saveSession) {
+    if(saveSession)
         localStorage.setItem("session", data);
-    }
 
-    //sem permanência
     sessionStorage.setItem("logged", data);
-};
-
-function checkLogged() {
-
-    if(session) {
-        sessionStorage.setItem("logged", session);
-        logged = session;
-    };
-
-    if(logged) {
-        saveSession(logged, session);
-        window.location.href = "home.html";
-    }
 };

@@ -1,11 +1,13 @@
-const myModal = new bootstrap.Modal("#transaction-modal"); //função do bootstrap
+//VARIÁVEIS
+
+const myModal = new bootstrap.Modal("#transaction-modal");
 let logged = sessionStorage.getItem("logged");
 const session = localStorage.getItem("session");
 let data = {
     transactions:[]
 };
 
-checkLogged();
+//CHECK INICIAL
 
 function checkLogged() {
 
@@ -17,17 +19,21 @@ function checkLogged() {
     if(!logged) {
         window.location.href = "index.html";
         return;
-    }
+    };
 
     const dataUser = localStorage.getItem(logged);
-    if (dataUser) {
+
+    if (dataUser)
         data = JSON.parse(dataUser);
-    }
 
     getCashIn();
     getCashOut();
     getTotal();
 };
+
+checkLogged();
+
+//LOGOUT
 
 function logout() {
 
@@ -38,13 +44,17 @@ function logout() {
 };
 
 document.getElementById("button-logout").addEventListener("click", logout);
+
+//IR PARA "TRANSACTIONS"
+
 document.getElementById("transactions-button").addEventListener("click", function() {
     window.location.href = "transactions.html";
-})
+});
 
 //ADICIONAR LANÇAMENTO
 
 document.getElementById("transaction-form").addEventListener("submit", function(e) {
+
     e.preventDefault();
 
     const value = parseFloat(document.getElementById("value-input").value);
@@ -69,6 +79,7 @@ document.getElementById("transaction-form").addEventListener("submit", function(
 });
 
 function saveData(data) {
+
     localStorage.setItem(data.login, JSON.stringify(data));
 };
 
@@ -82,9 +93,8 @@ function getCashIn() {
         let cashInHtml = ``;
         let limit = 5;
 
-        if (cashIn.length < 5) {
+        if (cashIn.length < 5)
             limit = cashIn.length;
-        }
         
         for (let i = 0; i < limit; i++) {
             cashInHtml += `
@@ -104,7 +114,7 @@ function getCashIn() {
                     </div>
                 </div>
             `
-        }
+        };
 
         document.getElementById("cash-in-list").innerHTML = cashInHtml;
     };
@@ -120,9 +130,8 @@ function getCashOut() {
         let cashOutHtml = ``;
         let limit = 5;
 
-        if (cashOut.length < 5) {
+        if (cashOut.length < 5)
             limit = cashOut.length;
-        }
         
         for (let i = 0; i < limit; i++) {
             cashOutHtml += `
@@ -142,7 +151,7 @@ function getCashOut() {
                     </div>
                 </div>
             `
-        }
+        };
 
         document.getElementById("cash-out-list").innerHTML = cashOutHtml;
     };
@@ -154,11 +163,11 @@ function getTotal() {
     let total = 0;
 
     transactions.forEach((item) => {
-        if (item.type === "1") {
+        
+        if (item.type === "1")
             total += item.value;
-        } else {
+        else
             total -= item.value;
-        }
     });
 
     document.getElementById("total").innerHTML = `RS ${total.toFixed(2)}`;
